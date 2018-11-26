@@ -50,7 +50,12 @@ public class HotelDbController {
 	}
 	
 	@PostMapping("/")
-	public ModelAndView updateReview(@RequestParam("hotel") Long id, @RequestParam("rating") Double rating) {
+	public ModelAndView updateReview(@RequestParam(name="hotel", required=false) Long id, @RequestParam("rating") Double rating) {
+		
+		if(id == null) {
+			return new ModelAndView("index");
+		}
+		
 		Review r = new Review(rating, hotelDao.findById(id));
 		reviewDao.createReview(r);
 		Hotel h = hotelDao.findById(id);
