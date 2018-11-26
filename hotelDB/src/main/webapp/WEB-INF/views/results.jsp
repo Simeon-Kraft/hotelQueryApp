@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <meta charset="UTF-8">
 <meta charset="ISO-8859-1">
@@ -36,12 +37,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 						<tr>
 							<th scope="col">Name</th>
 							<th scope="col">Price</th>
+							<th scope="col">Guest Rating</th>
 						</tr>
 					</thead>
 					<c:forEach var="hotel" items="${ list }">
 						<tr>
 							<td>${ hotel.name }</td>
 							<td>$ ${ hotel.price }</td>
+							<td><fmt:formatNumber type="number" maxFractionDigits="1" value="${ hotel.rating }"/></td>
 						</tr>
 					</c:forEach>
 					</c:if>
@@ -55,6 +58,31 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       </form>
     </div>
   </div>
+  <div class="w3-display-right w3-padding w3-col l6 m8">
+    <div class="w3-container w3-dark-grey">
+      <h2><i class="fa fa-bed w3-margin-right"></i>Leave a review</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-16">
+      <form action="/" method="post">
+        <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-full w3-margin-bottom">
+          	 <label><strong>Select Hotel</strong></label>
+            <select name="hotel">
+            	<option value="--" selected disabled hidden>--</option>
+            	<c:forEach var="hotel" items="${ list }">
+							<option value="${ hotel.id }">${ hotel.name }</option>
+				</c:forEach>
+            </select>
+          </div>
+          	<div class="w3-half w3-margin-top">
+           	 <label><strong>Rating</strong></label>
+           	 <input required="required" class="w3-input w3-border" type="number" value="0.0" name="rating" step=".1" max="10" min="0">
+          </div>
+        </div>
+        <button class="w3-button w3-dark-grey" type="submit">Submit</button>
+      </form>
+    </div>
+    </div>
 </header>
 </body>
 </html>
